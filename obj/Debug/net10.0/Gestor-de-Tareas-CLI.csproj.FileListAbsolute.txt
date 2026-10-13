@@ -1,0 +1,15 @@
+/Users/tamara/Desktop/PROYECTOS/Gestor-de-Tareas-CLI/obj/Debug/net10.0/Gestor-de-Tareas-CLI.GeneratedMSBuildEditorConfig.editorconfig
+/Users/tamara/Desktop/PROYECTOS/Gestor-de-Tareas-CLI/obj/Debug/net10.0/Gestor-de-Tareas-CLI.AssemblyInfoInputs.cache
+/Users/tamara/Desktop/PROYECTOS/Gestor-de-Tareas-CLI/obj/Debug/net10.0/Gestor-de-Tareas-CLI.AssemblyInfo.cs
+/Users/tamara/Desktop/PROYECTOS/Gestor-de-Tareas-CLI/obj/Debug/net10.0/Gestor-de-Tareas-CLI.csproj.CoreCompileInputs.cache
+/Users/tamara/Desktop/PROYECTOS/Gestor-de-Tareas-CLI/obj/Debug/net10.0/Gestor-de-Tareas-CLI.sourcelink.json
+/Users/tamara/Desktop/PROYECTOS/Gestor-de-Tareas-CLI/bin/Debug/net10.0/Gestor-de-Tareas-CLI
+/Users/tamara/Desktop/PROYECTOS/Gestor-de-Tareas-CLI/bin/Debug/net10.0/Gestor-de-Tareas-CLI.deps.json
+/Users/tamara/Desktop/PROYECTOS/Gestor-de-Tareas-CLI/bin/Debug/net10.0/Gestor-de-Tareas-CLI.runtimeconfig.json
+/Users/tamara/Desktop/PROYECTOS/Gestor-de-Tareas-CLI/bin/Debug/net10.0/Gestor-de-Tareas-CLI.dll
+/Users/tamara/Desktop/PROYECTOS/Gestor-de-Tareas-CLI/bin/Debug/net10.0/Gestor-de-Tareas-CLI.pdb
+/Users/tamara/Desktop/PROYECTOS/Gestor-de-Tareas-CLI/obj/Debug/net10.0/Gestor-de-Tareas-CLI.dll
+/Users/tamara/Desktop/PROYECTOS/Gestor-de-Tareas-CLI/obj/Debug/net10.0/refint/Gestor-de-Tareas-CLI.dll
+/Users/tamara/Desktop/PROYECTOS/Gestor-de-Tareas-CLI/obj/Debug/net10.0/Gestor-de-Tareas-CLI.pdb
+/Users/tamara/Desktop/PROYECTOS/Gestor-de-Tareas-CLI/obj/Debug/net10.0/Gestor-de-Tareas-CLI.genruntimeconfig.cache
+/Users/tamara/Desktop/PROYECTOS/Gestor-de-Tareas-CLI/obj/Debug/net10.0/ref/Gestor-de-Tareas-CLI.dll
