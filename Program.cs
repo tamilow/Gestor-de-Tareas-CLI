@@ -1,42 +1,18 @@
-﻿using System;
-using System.Security.Cryptography.X509Certificates;
-using System.Text.Json;
+﻿using TodoCli.Services;
+using TodoCli.Storage;
 
-const string archivo = "tareas.json";
-var tareas = CargarTareas();
-
-List<todoItem> CargarTareas()
-{
-    if (!File.Exists(archivo))
-        return new List<todoItem>();
-    
-    try
-    {
-        string json = File.ReadAllText(archivo);
-        return JsonSerializer.Deserialize<List<todoItem>>(json) ?? new List<todoItem>();
-    }
-    catch (JsonException)
-    {
-        Console.WriteLine("El archivo de tareas estaba dañado. Se empieza con una lista vacía.");
-        return new List<todoItem>();
-    }
-}
-
-void GuardarTareas()
-{
-    var opciones = new JsonSerializerOptions {WriteIndented = true};
-    string json = JsonSerializer.Serialize(tareas, opciones);
-    File.WriteAllText(archivo, json);
-}
+var storage = new JsonTodoStorage("tareas.json");
+var servicio = new TodoService(storage);
 
 void MostrarTareas()
 {
+    var tareas = servicio.ObtenerTodas();
+
     if (tareas.Count == 0)
     {
         Console.WriteLine("No hay tareas todavía.");
         return;
     }
-
 
     foreach (var t in tareas)
     {
@@ -48,13 +24,13 @@ void MostrarTareas()
 while (true)
 {
     Console.WriteLine();
-    Console.WriteLine("==== Gestor de Tareas ===");
+    Console.WriteLine("=== Gestor de tareas ===");
     Console.WriteLine("1. Listar tareas");
     Console.WriteLine("2. Agregar tarea");
     Console.WriteLine("3. Completar tarea");
     Console.WriteLine("4. Eliminar tarea");
     Console.WriteLine("5. Salir");
-    Console.WriteLine("Elige una opción: ");
+    Console.Write("Elige una opción: ");
     string? opcion = Console.ReadLine();
 
     switch (opcion)
@@ -64,75 +40,55 @@ while (true)
             break;
 
         case "2":
-            Console.WriteLine("Título de la tarea: ");
+        {
+            Console.Write("Título de la tarea: ");
             string? titulo = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(titulo))
-            {
-                Console.WriteLine("El título no puede estar vacío.");
-                break;
-            }
-            int nuevoId = tareas.Count == 0 ? 1 : tareas.Max(x => x.Id) + 1;
-            tareas.Add(new todoItem(nuevoId, titulo.Trim(), false));
-            GuardarTareas();
-            Console.WriteLine("Tarea agregada.");
+            Console.WriteLine(servicio.Agregar(titulo)
+                ? "Tarea agregada."
+                : "El título no puede estar vacío.");
             break;
+        }
 
         case "3":
+        {
+            MostrarTareas();
+            Console.Write("Id de la tarea a completar: ");
+
+            if (!int.TryParse(Console.ReadLine(), out int id))
             {
-                MostrarTareas();
-                Console.Write("Id de la tarea a completar: ");
-
-                if (!int.TryParse(Console.ReadLine(), out int idCompletar))
-                {
-                    Console.WriteLine("Debes escribir un número. ");
-                    break;
-                }
-
-                int pos = tareas.FindIndex(x => x.Id == idCompletar);
-                if (pos == -1)
-                {
-                    Console.WriteLine("No existe una tarea con ese Id.");
-                    break;
-                }
-
-                tareas[pos] = tareas[pos] with { Completada = true};
-                GuardarTareas();
-                Console.WriteLine("Tarea completada.");
+                Console.WriteLine("Debes escribir un número.");
                 break;
             }
+
+            Console.WriteLine(servicio.Completar(id)
+                ? "Tarea completada."
+                : "No existe una tarea con ese Id.");
+            break;
+        }
+
         case "4":
+        {
+            MostrarTareas();
+            Console.Write("Id de la tarea a eliminar: ");
+
+            if (!int.TryParse(Console.ReadLine(), out int id))
             {
-                MostrarTareas();
-                Console.Write("Id de la tarea a eliminar: ");
-
-                if (!int.TryParse(Console.ReadLine(), out int idEliminar))
-                {
-                    Console.WriteLine("Debes escribir un número. ");
-                    break;
-                }
-
-                int pos = tareas.FindIndex(x => x.Id == idEliminar);
-                if (pos == -1)
-                {
-                    Console.WriteLine("No existe una tarea con ese Id.");
-                    break;
-                }
-
-                tareas.RemoveAt(pos);
-                GuardarTareas();
-                Console.WriteLine("Tarea eliminada. ");
+                Console.WriteLine("Debes escribir un número.");
                 break;
             }
+
+            Console.WriteLine(servicio.Eliminar(id)
+                ? "Tarea eliminada."
+                : "No existe una tarea con ese Id.");
+            break;
+        }
 
         case "5":
             Console.WriteLine("¡Hasta luego!");
             return;
+
         default:
             Console.WriteLine("Opción no válida.");
             break;
     }
-
 }
-
-public record todoItem(int Id, string Titulo, bool Completada);
-
