@@ -1,8 +1,33 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.Json;
 
-var tareas = new List<todoItem>();
-    tareas.Add(new todoItem(1, "Aprender C#", false));
+const string archivo = "tareas.json";
+var tareas = CargarTareas();
+
+List<todoItem> CargarTareas()
+{
+    if (!File.Exists(archivo))
+        return new List<todoItem>();
+    
+    try
+    {
+        string json = File.ReadAllText(archivo);
+        return JsonSerializer.Deserialize<List<todoItem>>(json) ?? new List<todoItem>();
+    }
+    catch (JsonException)
+    {
+        Console.WriteLine("El archivo de tareas estaba dañado. Se empieza con una lista vacía.");
+        return new List<todoItem>();
+    }
+}
+
+void GuardarTareas()
+{
+    var opciones = new JsonSerializerOptions {WriteIndented = true};
+    string json = JsonSerializer.Serialize(tareas, opciones);
+    File.WriteAllText(archivo, json);
+}
 
 void MostrarTareas()
 {
@@ -26,7 +51,9 @@ while (true)
     Console.WriteLine("==== Gestor de Tareas ===");
     Console.WriteLine("1. Listar tareas");
     Console.WriteLine("2. Agregar tarea");
-    Console.WriteLine("4. Salir");
+    Console.WriteLine("3. Completar tarea");
+    Console.WriteLine("4. Eliminar tarea");
+    Console.WriteLine("5. Salir");
     Console.WriteLine("Elige una opción: ");
     string? opcion = Console.ReadLine();
 
@@ -35,6 +62,7 @@ while (true)
         case "1":
             MostrarTareas();
             break;
+
         case "2":
             Console.WriteLine("Título de la tarea: ");
             string? titulo = Console.ReadLine();
@@ -45,8 +73,10 @@ while (true)
             }
             int nuevoId = tareas.Count == 0 ? 1 : tareas.Max(x => x.Id) + 1;
             tareas.Add(new todoItem(nuevoId, titulo.Trim(), false));
+            GuardarTareas();
             Console.WriteLine("Tarea agregada.");
             break;
+
         case "3":
             {
                 MostrarTareas();
@@ -66,6 +96,7 @@ while (true)
                 }
 
                 tareas[pos] = tareas[pos] with { Completada = true};
+                GuardarTareas();
                 Console.WriteLine("Tarea completada.");
                 break;
             }
@@ -88,6 +119,7 @@ while (true)
                 }
 
                 tareas.RemoveAt(pos);
+                GuardarTareas();
                 Console.WriteLine("Tarea eliminada. ");
                 break;
             }

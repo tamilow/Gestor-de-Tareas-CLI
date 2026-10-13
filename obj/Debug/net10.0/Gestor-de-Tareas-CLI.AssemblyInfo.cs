@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Gestor-de-Tareas-CLI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bd3b6832c88d3cbc788f30915c3ac8f829c4ed3d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c78436f976fc94c5155a34ffefc469c6c0d26c62")]
 [assembly: System.Reflection.AssemblyProductAttribute("Gestor-de-Tareas-CLI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Gestor-de-Tareas-CLI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
